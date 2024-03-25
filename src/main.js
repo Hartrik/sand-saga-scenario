@@ -1,28 +1,27 @@
 
-import _ASSET_SAND_PALETTE from "./assets/sand-1.palette.csv"
+import _ASSET_SAND_PALETTE from "./assets/sand-1.palette.csv";
+
+import _ASSET_ROCK_SM_ICON from './assets/rock-sm-icon.png';
+import _ASSET_ROCK_SM_1 from './assets/rock-sm-1.png';
 
 const SandGameJS = window.SandGameJS;
 const BrushDefs = window.SandGameJS.BrushDefs;
 const Brushes = window.SandGameJS.Brushes;
 const ToolDefs = window.SandGameJS.ToolDefs;
 const Tools = window.SandGameJS.Tools;
+const Scenes = window.SandGameJS.Scenes;
 
 export function init(root, externalConfig) {
 
-    // Brushes - used to create elements.
-    //   We can create custom brushes by extending default brushes from BrushDefs class.
-    //   And/or using methods provided by Brushes class.
-
-    // Tools - there are brush tools, template tools, etc.
-    //   We can create custom tools using methods provided by Tools class.
+    // Learn basics about public API here: https://github.com/Hartrik/sand-game-js#api
 
 
     const MY_WATER_BRUSH = Brushes.color(156, 184, 212, BrushDefs.WATER);
     const MY_WATER_TOOL = Tools.roundBrushTool(MY_WATER_BRUSH, ToolDefs.DEFAULT_SIZE, ToolDefs.WATER.getInfo().derive({
-        // we will take water default...
+        // we will take water defaults...
     }));
 
-    const MY_SAND_1_BRUSH = Brushes.colorPalette(_ASSET_SAND_PALETTE, BrushDefs.SAND);
+    const MY_SAND_1_BRUSH = Brushes.colorPaletteRandom(_ASSET_SAND_PALETTE, BrushDefs.SAND);
     const MY_SAND_1_TOOL = Tools.roundBrushTool(MY_SAND_1_BRUSH, ToolDefs.DEFAULT_SIZE, ToolDefs.SAND.getInfo().derive({
         codeName: 'sand_1',
         badgeStyle: {
@@ -39,12 +38,36 @@ export function init(root, externalConfig) {
         }
     }));
 
+    const MY_TEMPLATE = Tools.templateSelectionTool([
+        {
+            info: {
+                displayName: "Rock",
+                category: "template",
+                icon: {
+                    imageData: _ASSET_ROCK_SM_ICON
+                }
+            },
+            action: {
+                type: "image-template",
+                imageData: _ASSET_ROCK_SM_1,
+                brush: "rock",
+                threshold: 50,
+                randomFlipHorizontally: true
+            }
+        }
+    ], ToolDefs.ROCK_TEMPLATES.getInfo().derive({
+        codeName: 'templates',
+        displayName: 'My templates',
+        badgeStyle: {
+            backgroundColor: `rgb(127, 46, 246)`,
+        }
+    }));
+
     /**
      *
      * @param sandGame {SandGame}
-     * @param controller {Controller}
      */
-    function buildScene(sandGame, controller) {
+    function buildScene1(sandGame) {
 
         function seed() {
             return Math.trunc(Math.random() * 1024);
@@ -62,6 +85,29 @@ export function init(root, externalConfig) {
         sandGame.graphics().drawRectangle(50, 50, 300, 60, BrushDefs.WALL);
     }
 
+    /**
+     *
+     * @param sandGame {SandGame}
+     */
+    function buildScene2(sandGame) {
+        sandGame.blockTemplate()
+            .withMaxHeight(120)
+            .withBlueprint([
+                '          ',
+                '          ',
+                '          ',
+                '       1  ',
+                ' w 111111 ',
+                '          ',
+                '          ',
+            ])
+            .withBrushes({
+                w: Brushes.withIntensity(0.5, BrushDefs.WATER),
+                1: BrushDefs.SAND
+            })
+            .paint();
+    }
+
     const config = {
         tools: [
             ToolDefs.ERASE,
@@ -69,19 +115,21 @@ export function init(root, externalConfig) {
             MY_SAND_1_TOOL,
             MY_SAND_2_TOOL,
             MY_WATER_TOOL,
-            ToolDefs.WALL
+            ToolDefs.WALL,
+            MY_TEMPLATE
         ],
 
-        scene: {
-            init: buildScene
+        scenes: {
+            scene_1: Scenes.custom('My scene 1', buildScene1),
+            scene_2: Scenes.custom('My scene 2', buildScene2)
         },
 
         primaryTool: MY_SAND_1_TOOL,
         secondaryTool: ToolDefs.ERASE,
         tertiaryTool: ToolDefs.NONE,
 
-        disableSizeChange: true,
-        disableSceneSelection: true,
+        // disableSizeChange: true,
+        // disableSceneSelection: true,
     };
 
     let mergedConfig = {};
