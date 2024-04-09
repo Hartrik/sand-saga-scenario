@@ -23,9 +23,11 @@ Learn basics about public API here: https://github.com/Hartrik/sand-game-js#api
 
 Install [Node](https://nodejs.org/en) which contains npm.
 
+`npm install` downloads dependencies.
+
 `npm run build` builds scenario to `dist`.
 
-`npm run dev` builds scenario, then keeps rebuilding it whenever the source files change using rollup-watch.
+`npm run dev` builds scenario, then keeps rebuilding it whenever the source files change.
 
 ### Run
 
