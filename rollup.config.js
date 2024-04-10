@@ -39,14 +39,14 @@ const PLUGINS_MIN = [
 const OUTPUTS = [
     {
         // browser-friendly UMD build
-        name: 'SandSagaCommunity',
+        name: 'SandSagaScenarioBuilder',
         file: `dist/sand-saga_community_${pkg.scenario}.umd.js`,
         format: 'umd',
         sourcemap: true,
     },
     {
         // browser-friendly UMD build, MINIMIZED
-        name: 'SandSagaCommunity',
+        name: 'SandSagaScenarioBuilder',
         file: `dist/sand-saga_community_${pkg.scenario}.umd.min.js`,
         format: 'umd',
         sourcemap: true,

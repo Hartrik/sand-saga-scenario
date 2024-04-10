@@ -15,7 +15,7 @@
   <link rel="stylesheet" type="text/css" href="https://files.harag.cz/www/app/sand-game-js/prod/24w12a/sand-game-js.css" />
   <script>
       document.addEventListener('DOMContentLoaded', () => {
-          if (window.SandGameJS !== undefined && window.SandSagaCommunity !== undefined) {
+          if (window.SandGameJS !== undefined && window.SandSagaScenarioBuilder !== undefined) {
               const root = document.getElementById('sand-game-root');
 
               const externalConfig = {
@@ -23,7 +23,7 @@
                   debug: true,
               };
 
-              const config = SandSagaCommunity.createConfig();
+              const config = SandSagaScenarioBuilder.createConfig();
 
               const mergedConfig = {};
               Object.assign(mergedConfig, config);
