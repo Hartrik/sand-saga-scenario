@@ -18,12 +18,19 @@
           if (window.SandGameJS !== undefined && window.SandSagaCommunity !== undefined) {
               const root = document.getElementById('sand-game-root');
 
-              const config = {
+              const externalConfig = {
                   version: 'dev',
                   debug: true,
               };
 
-              SandSagaCommunity.init(root, config);
+              const config = SandSagaCommunity.createConfig();
+
+              const mergedConfig = {};
+              Object.assign(mergedConfig, config);
+              Object.assign(mergedConfig, externalConfig);
+
+              SandGameJS.init(root, mergedConfig);
+
           } else {
               const placeholder = document.getElementById('sand-game-placeholder-content');
               placeholder.innerHTML = '<span style="color: red; font-weight: bold;">Failed to load, check browser console</span>';

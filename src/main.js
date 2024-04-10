@@ -11,7 +11,7 @@ const ToolDefs = window.SandGameJS.ToolDefs;
 const Tools = window.SandGameJS.Tools;
 const Scenes = window.SandGameJS.Scenes;
 
-export function init(root, externalConfig) {
+export function createConfig() {
 
     // Learn basics about public API here: https://github.com/Hartrik/sand-game-js#api
 
@@ -132,9 +132,5 @@ export function init(root, externalConfig) {
         // disableSceneSelection: true,
     };
 
-    let mergedConfig = {};
-    Object.assign(mergedConfig, externalConfig);
-    Object.assign(mergedConfig, config);
-
-    return SandGameJS.init(root, mergedConfig);
+    return config;
 }
