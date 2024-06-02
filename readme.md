@@ -38,4 +38,4 @@ A web server is needed to open index.html correctly.
 
 ### Updates
 
-To update Sand Game JS to newer version replace all `24w12a` occurrences in this project.
+To update Sand Game JS to newer version replace all `24w21a` occurrences in this project.

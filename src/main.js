@@ -55,7 +55,7 @@ export function createConfig() {
                 randomFlipHorizontally: true
             }
         }
-    ], ToolDefs.ROCK_TEMPLATES.getInfo().derive({
+    ], ToolDefs.ROCK_TEMPLATES_SM.getInfo().derive({
         codeName: 'templates',
         displayName: 'My templates',
         badgeStyle: {
